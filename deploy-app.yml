@@ -1,0 +1,109 @@
+# al digitar este texto: 
+# Create a GitHub action to email a report from a file at 6 a.m. daily
+#y dar control enter, se genera este codigo :
+
+# Create a GitHub action to email a report from a file at 6 a.m. daily
+name: Email Report
+on:
+  schedule:
+    - cron: "0 6 * * *"
+jobs:
+  email_report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Send report
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          REPORT_FILE: "report.txt"
+        run: |
+          echo "Sending report..."
+          echo "Hello, here is the report for today:" > $REPORT_FILE
+          echo "..." >> $REPORT_FILE
+          echo "..." >> $REPORT_FILE
+          echo "..." >> $REPORT_FILE
+          echo "Sent at $(date)" >> $REPORT_FILE
+          echo "End of report." >> $REPORT_FILE
+          curl -s -u $GMAIL_USER:$GMAIL_PASSWORD \
+            --mail-from $GMAIL_USER \
+            --mail-rcpt $TO_EMAIL \
+            --url 'smtps://smtp.gmail.com:465' \
+            -T $REPORT_FILE
+          echo "Report sent!"
+
+          #pero si me pondgo de creativo, no genera nada jajaja
+          # Create a GitHub action to send via email at 6:00 and 17:00 all  sundays and mondays with the list of update files in the last 3 days
+                    #name: Email Report
+          #on:
+          #  schedule:
+          #    - cron: "0 6,17 * * 0,1"
+          #jobs:
+          #  email_report:
+          #    runs-on: ubuntu-latest
+          #    steps:
+          #      - name: Check out repository
+          #        uses: actions/checkout@v2
+          #      - name: Send report
+          #        env:
+          #          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          #          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+          #          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          #          REPORT_FILE: "report.txt"
+          #        run: |
+          #          echo "Sending report..."
+          #          echo "Hello, here is the report for today:" > $REPORT_FILE
+          #          echo "..." >> $REPORT_FILE
+          #          echo "..." >> $REPORT_FILE
+          #          echo "..." >> $REPORT_FILE
+          #          echo "Sent at $(date)" >> $REPORT_FILE
+          #          echo "End of report." >> $REPORT_FILE
+          #          curl -s -u $GMAIL_USER:$GMAIL_PASSWORD \
+          #            --mail-from $GMAIL_USER \
+          #            --mail-rcpt $TO_EMAIL \
+          #            --url 'smtps://smtp.gmail.com:465' \
+          #            -T $REPORT_FILE
+          #          echo "Report
+
+
+
+#manejo de errores en copilot:
+#Incase of this error CTRL + ENTER: command 'github.copilot.generate' not found , Please follow the below steps
+#In the file Explorer Go to the path %USERPROFILE%/AppData/Roaming/Code/CachedExtensionVSIXs (1)
+#Delete all copilot files (2) present in this path.
+#ingrese a las extensiones de visual studio code, escoja githubcopilot y ejecute el bototn 'reload required'
+#reopen vsCode reload the github copilot extenstion (3) in vscode
+
+
+#otra opcion 
+#create a github action to email the user when one push had been made
+#genera:
+#name: Email on Push
+#on:
+#  push:
+#    branches:
+#      - main
+#jobs:
+#  email_user:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out repository
+#        uses: actions/checkout@v2
+#      - name: Send email
+#        env:
+#          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+#          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+#          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+#          REPORT_FILE: "report.txt"
+#        run: |
+#          echo "Sending email..."
+#          echo "Hello, a push has been made to the main branch" > $REPORT_FILE
+#          echo "Sent at $(date)" >> $REPORT_FILE
+#          echo "End of email." >> $REPORT_FILE
+#          curl -s -u $GMAIL_USER:$GMAIL_PASSWORD \
+#            --mail-from $GMAIL_USER \
+#            --mail-rcpt $TO_EMAIL \
+#            --url 'smtps://smtp.gmail.com:465' \
+#            -T $REPORT_FILE
