@@ -1,0 +1,10 @@
+
+Machine Learning Frameworks: Copilot supports various Machine Learning libraries and frameworks like TensorFlow, PyTorch, scikit-learn, and more. It can assist with code generation for tasks like data preprocessing, model building, and evaluation.
+
+
+clonar el repositorio:
+git clone https://github.com/CloudLabsAI-Azure/ml-copilot-workshop.git
+cd ml-copilot-workshop
+pip install -r requirements.txt
+pip install -r requirementsII.txt
+ahora si se puede ejecutar /workspaces/skills-copilot-codespace_ooaas-vscode/ml-copilot-workshop/Experiments.ipynb 
